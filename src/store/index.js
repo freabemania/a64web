@@ -4,7 +4,7 @@ export default new Vuex.Store({
     state() {
         return {
             count : 0,
-            loggedIn: true
+            loggedIn: false
         }
     },
     mutations: {
