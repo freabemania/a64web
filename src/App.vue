@@ -89,18 +89,15 @@ import store from '@/store'
       //
     }),
     computed: {
-      ...mapGetters(['increment','online','loggedIn','passwordLogin'])
+      ...mapGetters('login',['passwordLogin','loggedIn'])
     },
     methods: {
       login() {
         let credentials = {
           username : this.username,
           password : this.password
-
         }
-        console.log('login::::::::: ' + credentials.username + ' ' + credentials.password)
-        store.dispatch('loginWithPassword',credentials)
-
+        store.dispatch('login/loginWithPassword',credentials)
       },
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0
