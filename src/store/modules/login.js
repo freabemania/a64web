@@ -1,30 +1,38 @@
+import axios from 'axios'
+
 const state = {
     user: {
 
     },
-    loggedIn: false
+    authenticated: false
 }
 
 const getters = {
-    loggedIn : state => {
-        return state.loggedIn
+    authenticated : state => {
+        return state.authenticated
     }
 }
 
 const mutations = {
-    loginWithPass(state, credentials) {
+    withPassword(state, credentials) {
+        axios.get('https://hackerswithstyle.se/leet/user/donations')
+            .then(function (response) {
+                console.log('Ok ' + response.data)
+                state.authenticated = true
+            })
+            .catch(function (error) {
+                console.log('Err ' + error)
+                state.authenticated = false
+            })
         console.log('Login ' + credentials.username + ' ' + credentials.password )
         console.log('state' + state)
-        state.loggedIn = true
+
     }
 }
 
 const actions = {
-    loginWithPassword({commit},credentials) {
-        commit('loginWithPass',credentials)
-    },
-    loggedIn : state => {
-        return state.loggedIn
+    withPassword({commit},credentials) {
+        commit('withPassword',credentials)
     }
 }
 

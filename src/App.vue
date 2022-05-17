@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="loggedIn">
+  <v-app v-if="authenticated">
     <v-app-bar app>
       <v-app-bar-title class="headline text-uppercase">
         <span>Assembly64</span>
@@ -43,7 +43,7 @@
       </v-container>
     </v-main>
   </v-app>
-  <v-app v-if="!loggedIn">
+  <v-app v-if="!authenticated">
     <div class="d-flex align-center flex-column">
       <v-card
           width="400"
@@ -89,7 +89,7 @@ import store from '@/store'
       //
     }),
     computed: {
-      ...mapGetters('login',['passwordLogin','loggedIn'])
+      ...mapGetters('login',['withPassword','authenticated'])
     },
     methods: {
       login() {
@@ -97,7 +97,7 @@ import store from '@/store'
           username : this.username,
           password : this.password
         }
-        store.dispatch('login/loginWithPassword',credentials)
+        store.dispatch('login/withPassword',credentials)
       },
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0
