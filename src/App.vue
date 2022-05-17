@@ -75,10 +75,11 @@
 
 <script>
 import { mapGetters} from 'vuex'
+import store from '@/store'
 
   export default {
     name: 'App',
-    mounted() {
+    beforeMount() {
       this.showLoginButton = false
     },
     data: () => ({
@@ -88,11 +89,18 @@ import { mapGetters} from 'vuex'
       //
     }),
     computed: {
-      ...mapGetters(['increment','online','loggedIn'])
+      ...mapGetters(['increment','online','loggedIn','passwordLogin'])
     },
     methods: {
       login() {
-        console.log('login ' + this.username)
+        let credentials = {
+          username : this.username,
+          password : this.password
+
+        }
+        console.log('login::::::::: ' + credentials.username + ' ' + credentials.password)
+        store.dispatch('loginWithPassword',credentials)
+
       },
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0

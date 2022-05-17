@@ -9,11 +9,20 @@ export default new Vuex.Store({
     },
     mutations: {
         increment(state) {
-            console.log('increment count')
             state.count++
         },
         online(state) {
             return state.count;
+        },
+        loginWithPass({state}, credentials) {
+            console.log('Login ' + credentials.username + ' ' + credentials.password )
+            console.log('state' + state)
+            state.loggedIn = true
+        }
+    },
+    actions: {
+        loginWithPassword({commit},credentials) {
+            commit('loginWithPass',credentials)
         }
     },
     getters: {
@@ -21,6 +30,4 @@ export default new Vuex.Store({
             return state.loggedIn
         }
     }
-
-
 })
