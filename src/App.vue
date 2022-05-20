@@ -43,12 +43,14 @@
       </v-container>
     </v-main>
   </v-app>
-  <v-app v-if="!authenticated">
+  <v-app v-if="!authenticated" class="bg-grey-darken-4">
     <div class="d-flex align-center flex-column">
       <v-card
           width="400"
-          title="Assembly64 Login"
+          title="Assembly64 Login" class="bg-grey-darken-4 align-center"
       >
+        <v-label v-if="loginError" class="text-red-accent-1">Invalid credentials</v-label>
+        <v-spacer v-if="loginError" ></v-spacer>
         <v-text-field
             v-model="username"
             @keyup="toggleLoginButton"
@@ -56,6 +58,7 @@
             variant="outlined"
             clearable
             clear-icon="mdi-cancel"
+            class="bg-grey-darken-4"
         ></v-text-field>
         <v-text-field @keyup="toggleLoginButton"
             v-model="password"
@@ -64,7 +67,9 @@
             clearable
             clear-icon="mdi-cancel"
         ></v-text-field>
-        <v-btn color="primary" @click="login" v-if="showLoginButton">
+
+        <v-spacer></v-spacer>
+        <v-btn color="primary" @click="login" v-if="showLoginButton" class="red--text">
           Login
         </v-btn>
       </v-card>
@@ -72,6 +77,13 @@
     </div>
   </v-app>
 </template>
+
+<style lang="less">
+.sidify-main {
+  background-color: aquamarine;
+}
+
+</style>
 
 <script>
 import { mapGetters} from 'vuex'
@@ -89,7 +101,7 @@ import store from '@/store'
       //
     }),
     computed: {
-      ...mapGetters('login',['withPassword','authenticated'])
+      ...mapGetters('login',['withPassword','authenticated','loginError'])
     },
     methods: {
       login() {
@@ -102,7 +114,6 @@ import store from '@/store'
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0
       }
-
     }
   }
 </script>
