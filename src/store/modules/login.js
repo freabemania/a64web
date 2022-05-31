@@ -35,7 +35,7 @@ const mutations = {
     withPassword(state, credentials) {
         console.log(credentials)
         //axios.get(WEB_BASE + '/user/login/lite/' + credentials.username + '/' + credentials.password)
-        axios.get(WEB_BASE + '/user/login/lite/freabe@gmail.com/fredde2002w')
+        axios.get(WEB_BASE + '/user/login/lite/freabe@gmail.com/fredde2002')
             .then(function (response) {
                 console.log('Ok ' + response.data)
                 state.authenticated = true

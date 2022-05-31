@@ -44,6 +44,11 @@
     </v-main>
   </v-app>
   <v-app v-if="!authenticated" class="bg-grey-darken-4">
+    <v-toolbar app class="bg-grey-darken-3">
+      <v-toolbar-title class="headline text-uppercase">Assembly64</v-toolbar-title>
+      <v-btn flat href="http://download" target="_blank" icon="mdi-download-circle">
+      </v-btn>
+    </v-toolbar>
     <div class="d-flex align-center flex-column">
       <v-card
           width="400"
@@ -73,7 +78,6 @@
           Login
         </v-btn>
       </v-card>
-
     </div>
   </v-app>
 </template>
