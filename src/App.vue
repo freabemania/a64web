@@ -1,47 +1,28 @@
 <template>
   <v-app v-if="authenticated">
-    <v-app-bar app>
-      <v-app-bar-title class="headline text-uppercase">
-        <span>Assembly64</span>
-
-      </v-app-bar-title>
-      <!-- -->
-    </v-app-bar>
-    <v-navigation-drawer app>
-      <v-card>
-        <v-layout>
-          <v-navigation-drawer
-              expand-on-hover
-              rail
-          >
-            <v-list>
-              <v-list-item
-                  prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-                  title="Sandra Adams"
-                  subtitle="sandra_a88@gmailcom"
-              ></v-list-item>
-            </v-list>
-
-            <v-divider></v-divider>
-
-            <v-list density="compact" nav>
-              <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-              <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-              <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-            </v-list>
-          </v-navigation-drawer>
-
-          <v-main style="height: 250px"></v-main>
-        </v-layout>
-      </v-card>
-      <!-- -->
-    </v-navigation-drawer>
-
-    <v-main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-main>
+      <v-navigation-drawer v-model="drawer" app>
+        <v-list>
+          <v-list-item
+              prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+              title="Sandra Adams"
+              subtitle="sandra_a88@gmailcom"
+          ></v-list-item>
+        </v-list>
+        <v-list density="compact" nav>
+          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <v-app-bar app>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
+      </v-app-bar>
+      <v-main>
+        <v-container fluid>
+          <router-view></router-view>
+        </v-container>
+      </v-main>
   </v-app>
   <v-app v-if="!authenticated" class="bg-grey-darken-4">
     <v-toolbar app class="bg-grey-darken-3">
@@ -92,15 +73,20 @@
 <script>
 import { mapGetters} from 'vuex'
 import store from '@/store'
+import router from "@/router";
 
   export default {
     name: 'App',
     beforeMount() {
       this.showLoginButton = false
     },
+    mounted() {
+      router.push("/landingpage")
+    },
     data: () => ({
       username : '',
       password : '',
+      drawer: null,
       showLoginButton : false
       //
     }),
@@ -117,6 +103,12 @@ import store from '@/store'
       },
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0
+      },
+      toSearch() {
+        router.push("/search")
+      },
+      toStart() {
+        router.push("/")
       }
     }
   }
