@@ -1,20 +1,21 @@
 <template>
-  <v-app v-if="authenticated">
-      <v-navigation-drawer v-model="drawer" app>
-        <v-list>
+  <v-app v-if="authenticated" class="bg-grey-darken-4">
+      <v-navigation-drawer v-model="drawer" class="bg-grey-darken-4" app>
+        <v-list class="bg-grey-darken-4">
           <v-list-item
               prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
               title="Sandra Adams"
               subtitle="sandra_a88@gmailcom"
+              class="bg-grey-darken-4"
           ></v-list-item>
         </v-list>
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared"></v-list-item>
+        <v-list density="compact" class="bg-grey-darken-4" nav>
+          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search" class="bg-grey-darken-4"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared" class="bg-grey-darken-4"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <v-app-bar app>
+      <v-app-bar class="bg-grey-darken-4" app>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
       </v-app-bar>
