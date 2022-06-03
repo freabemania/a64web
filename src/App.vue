@@ -1,6 +1,6 @@
 <template>
-  <v-app v-if="authenticated" class="bg-grey-darken-4">
-      <v-navigation-drawer v-model="drawer" class="bg-grey-darken-4" app>
+  <v-app v-if="authenticated" theme="dark">
+      <v-navigation-drawer v-model="drawer" app>
         <v-list class="bg-grey-darken-4">
           <v-list-item
               prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
@@ -9,13 +9,13 @@
               class="bg-grey-darken-4"
           ></v-list-item>
         </v-list>
-        <v-list density="compact" class="bg-grey-darken-4" nav>
-          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search" class="bg-grey-darken-4"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared" class="bg-grey-darken-4"></v-list-item>
+        <v-list density="compact" nav>
+          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <v-app-bar class="bg-grey-darken-4" app>
+      <v-app-bar app>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
       </v-app-bar>
@@ -25,8 +25,8 @@
         </v-container>
       </v-main>
   </v-app>
-  <v-app v-if="!authenticated" class="bg-grey-darken-4">
-    <v-toolbar app class="bg-grey-darken-3">
+  <v-app v-if="!authenticated" theme="dark">
+    <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">Assembly64</v-toolbar-title>
       <v-btn flat href="http://download" target="_blank" icon="mdi-download-circle">
       </v-btn>
@@ -34,7 +34,7 @@
     <div class="d-flex align-center flex-column">
       <v-card
           width="400"
-          title="Assembly64 Login" class="bg-grey-darken-4 align-center"
+          title="Assembly64 Login" class="align-center"
       >
         <v-label v-if="loginError" class="text-red-accent-1">Invalid credentials</v-label>
         <v-spacer v-if="loginError" ></v-spacer>
@@ -45,7 +45,6 @@
             variant="outlined"
             clearable
             clear-icon="mdi-cancel"
-            class="bg-grey-darken-4"
         ></v-text-field>
         <v-text-field @keyup="toggleLoginButton"
             v-model="password"
@@ -54,7 +53,6 @@
             clearable
             clear-icon="mdi-cancel"
         ></v-text-field>
-
         <v-spacer></v-spacer>
         <v-btn color="primary" @click="login" v-if="showLoginButton" class="red--text">
           Login

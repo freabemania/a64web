@@ -14,7 +14,7 @@
     </v-row>
   </div>
 
-  <v-table class="bg-grey-darken-4">
+  <v-table theme="dark" v-on:click="rowClick" v-model="selected">
     <thead>
     <tr>
       <th class="text-left">
@@ -38,6 +38,22 @@
     </tr>
     </tbody>
   </v-table>
+
+  <v-dialog
+      v-model="dialog"
+  >
+    <v-card>
+      <v-card-text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+
+
 </template>
 
 <script>
@@ -47,12 +63,17 @@ import store from '@/store'
   export default {
     data() {
       return {
+        selected : null,
+        dialog: false,
         searchCriteria: null
       }
     }, methods: {
       search() {
         store.commit('search/executeSearch',this.searchCriteria)
         console.log('search')
+      }, rowClick() {
+        this.dialog = true
+        console.log('item ',this.selected)
       }
     },
     computed: {
