@@ -14,7 +14,7 @@
     </v-row>
   </div>
 
-  <v-table theme="dark" v-on:click="rowClick" v-model="selected">
+  <v-table theme="dark" model-value="selectedRows">
     <thead>
     <tr>
       <th class="text-left">
@@ -30,7 +30,7 @@
     </thead>
     <tbody>
     <tr
-        v-for="item in items" :key="item.id"
+        v-for="item in items" :key="item.id" @click="rowClick(item)"
     >
       <td>{{ item.name }}</td>
       <td>{{ item.group }}</td>
@@ -39,22 +39,47 @@
     </tbody>
   </v-table>
 
-  <v-dialog
-      v-model="dialog"
-  >
-    <v-card>
-      <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <v-row justify="center">
+    <v-dialog
+        v-model="dialog"
+        fullscreen
+        :scrim="false"
+        transition="dialog-bottom-transition"
+    >
+
+      <v-card>
+        <v-toolbar
+            dark
+            color="primary"
+        >
+          <v-btn
+              icon
+              dark
+              @click="dialog = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Close</v-toolbar-title>
+        </v-toolbar>
+        <v-label>{{selectedItem.name}}</v-label>
+        <v-card>
+          <v-card-title>{{ selectedItem.name }}</v-card-title>
+        </v-card>
+
+      </v-card>
+    </v-dialog>
+  </v-row>
 
 
 
 </template>
+
+<style>
+.dialog-bottom-transition-enter-active,
+.dialog-bottom-transition-leave-active {
+  transition: transform .2s ease-in-out;
+}
+</style>
 
 <script>
 import {mapGetters} from 'vuex'
@@ -63,17 +88,22 @@ import store from '@/store'
   export default {
     data() {
       return {
-        selected : null,
+        selectedItem : null,
         dialog: false,
-        searchCriteria: null
+        searchCriteria: null,
+        notifications: false,
+        sound: true,
+        widgets: false,
+        olle: 'djdjdjd'
       }
     }, methods: {
       search() {
         store.commit('search/executeSearch',this.searchCriteria)
         console.log('search')
-      }, rowClick() {
+      }, rowClick(item) {
+        this.selectedItem = item
         this.dialog = true
-        console.log('item ',this.selected)
+        console.log('e',item,this.selectedItem)
       }
     },
     computed: {
