@@ -38,76 +38,31 @@
     </tr>
     </tbody>
   </v-table>
-
-  <v-row justify="center">
-    <v-dialog
-        v-model="dialog"
-        fullscreen
-        :scrim="false"
-        transition="dialog-bottom-transition"
-    >
-
-      <v-card>
-        <v-toolbar
-            dark
-            color="primary"
-        >
-          <v-btn
-              icon
-              dark
-              @click="dialog = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Close</v-toolbar-title>
-        </v-toolbar>
-        <v-label>{{selectedItem.name}}</v-label>
-        <v-card>
-          <v-card-title>{{ selectedItem.name }}</v-card-title>
-        </v-card>
-
-      </v-card>
-    </v-dialog>
-  </v-row>
-
-
-
 </template>
 
 <style>
-.dialog-bottom-transition-enter-active,
-.dialog-bottom-transition-leave-active {
-  transition: transform .2s ease-in-out;
-}
 </style>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 import store from '@/store'
+import router from '@/router'
 
   export default {
     data() {
       return {
-        selectedItem : null,
-        dialog: false,
-        searchCriteria: null,
-        notifications: false,
-        sound: true,
-        widgets: false,
-        olle: 'djdjdjd'
+        searchCriteria: null
       }
     }, methods: {
       search() {
-        store.commit('search/executeSearch',this.searchCriteria)
-        console.log('search')
+        store.dispatch('search/executeSearch',this.searchCriteria)
       }, rowClick(item) {
-        this.selectedItem = item
-        this.dialog = true
-        console.log('e',item,this.selectedItem)
+        router.push('/contentItem/' + item.category + '/' + item.id)
       }
     },
     computed: {
-      ...mapGetters('search',['items'])
+      ...mapGetters('search',['items']),
+      ...mapActions('search',['executeSearch'])
     }
   }
 
