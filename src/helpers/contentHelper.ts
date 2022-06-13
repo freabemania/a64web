@@ -1,3 +1,3 @@
-export function formatYear(year) {
+export function formatYear(year : Number) {
     return year
 }
