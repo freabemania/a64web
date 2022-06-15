@@ -90,7 +90,7 @@ import router from "@/router";
       //
     }),
     computed: {
-      ...mapGetters('login',['withPassword','authenticated','loginError'])
+      ...mapGetters('security',['authenticated','loginError'])
     },
     methods: {
       login() {
@@ -98,7 +98,7 @@ import router from "@/router";
           username : this.username,
           password : this.password
         }
-        store.dispatch('login/withPassword',credentials)
+        store.dispatch('security/withPassword',credentials)
       },
       toggleLoginButton() {
         this.showLoginButton = this.username.length > 0 && this.password.length > 0
