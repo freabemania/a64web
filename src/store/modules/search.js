@@ -28,6 +28,10 @@ const mutations = {
     },
     selectItem(state,contentKey) {
         state.selectedItem = state.searchResult.find(item => item.id === contentKey.id && item.category === contentKey.category)
+    },
+    fetchFiles(state,contentKey) {
+        console.log(state,contentKey)
+        
     }
 }
 
