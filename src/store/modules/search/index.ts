@@ -2,30 +2,42 @@ import {ActionTree, GetterTree, Module, MutationTree} from "vuex";
 import {SearchState, Item, DefaulItem} from "@/store/modules/search/types";
 import {RootState} from "@/store/types";
 import axios, {AxiosResponse} from "axios";
+import {ContentKey} from "@/models/ContentKey";
+import {ContentEntryContainer, Id} from "@/models/ContentEntry";
+import {SearchEntry} from "@/models/SearchEntry";
 
 const WEB_BASE = 'https://hackerswithstyle.se/leet'
 
 export const state: SearchState = {
-    searchResult : Array<Item>(),
-    selectedItem : undefined
+    searchResult : undefined,
+    selectedItem : undefined,
+    contentEntries : undefined
 }
 
 const getters : GetterTree<SearchState, RootState> = {
     items(state) : Array<Item> {
-        return state.searchResult;
+        return state.searchResult!;
     },
     selectedItem(state) : Item {
         return state.selectedItem!;
+    },
+    contentEntries(state) : Array<Id> {
+        state.contentEntries!.contentEntry.forEach(item => console.log(':::' +item.id));
+        return state.contentEntries!.contentEntry;
     }
 }
 
 const mutations : MutationTree<SearchState> = {
-    searchOk(state,searchResult) : any {
+    searchOk(state,searchResult : SearchEntry[]) : any {
         state.searchResult = searchResult;
     },
-    selectItem(state,contentKey) : any {
-        state.selectedItem = state.searchResult.find(item => item.id === contentKey.id && item.category === contentKey.category)
+    selectItem(state,contentKey : ContentKey) : any {
+        state.selectedItem = state.searchResult!.find(item => item.id === contentKey.id && item.category === contentKey.category)
     },
+    fetchFiles(state, contentEntries: ContentEntryContainer) : any {
+        state.contentEntries = contentEntries;
+        state.contentEntries.contentEntry.forEach(item => console.log(item.id));
+    }
 }
 
 const actions : ActionTree<SearchState, RootState> = {
@@ -35,13 +47,24 @@ const actions : ActionTree<SearchState, RootState> = {
         }).then((response:AxiosResponse) => {
             commit('searchOk',response.data);
         },(error:any) => {
-            console.error(error)
+            console.error(error);
         })
     },
-    selectItem({commit}, idAndCategory) {
-        console.log('1a')
-        commit('selectItem',idAndCategory)
+    selectItem({commit}, contentKey : ContentKey) {
+        commit('selectItem',contentKey);
     },
+    fetchFiles({commit}, contentKey : ContentKey) {
+            console.log(btoa(contentKey.id));
+        axios({
+            url : WEB_BASE + '/search/v2/contententries/' + btoa(contentKey.id) + '/' + contentKey.category
+        }).then((response:AxiosResponse) => {
+            console.log(response.data)
+            commit('fetchFiles',response.data)
+        },(error:any) => {
+            console.error(error);
+        })
+
+    }
 }
 
 const namespaced: boolean = true;

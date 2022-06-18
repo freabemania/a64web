@@ -27,7 +27,7 @@
       <v-row>
         <v-col cols="4">
           <div class="text-uppercase text-shades-white text-h6">Files</div>
-          <v-list style="max-height: 300px" class="overflow-y-auto" :items="items"></v-list>
+          <v-list style="max-height: 300px" class="overflow-y-auto" :items="contentEntries" item-title="id" item-value="id"></v-list>
         </v-col>
         <v-col cols="8">
           <div class="text-uppercase text-shades-white text-h6">Image</div>
@@ -43,25 +43,9 @@
   import router from '@/router'
   import {mapGetters,mapActions} from 'vuex'
   import store from '@/store'
-  import {formatYear} from '@/helpers/contentHelper.ts'
+  import {toContentKey} from '@/helpers/ContentHelper.ts'
 
   export default {
-    data: () => ({
-      items: [
-        {
-          title: 'Item #1',
-          value: 1,
-        },
-        {
-          title: 'Item #2',
-          value: 2,
-        },
-        {
-          title: 'Item #3',
-          value: 3,
-        },
-      ],
-    }),
     props: {
       id : {
         type: String,
@@ -73,19 +57,12 @@
       }
     },
     beforeMount() {
-      //console.log(this.id + ' ' + store.getters["search"].selec)
-      //store.state.search.
-      //store.state.search.getters.selectedItem(this.id, this.category)
-      console.log('for ' + formatYear('123'))
-      console.log(btoa('208845') )
-      store.dispatch('search/selectItem', {
-        id: this.id,
-        category: this.category
-      })
-
+      const contentKey = toContentKey(this.id,this.category);
+      store.dispatch('search/selectItem', contentKey)
+      store.dispatch('search/fetchFiles',contentKey)
     },
     computed: {
-      ...mapGetters('search',['selectedItem']),
+      ...mapGetters('search',['selectedItem','contentEntries']),
       ...mapActions('search',['selectItem'])
     },
     methods: {

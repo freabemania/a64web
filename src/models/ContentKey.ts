@@ -1,7 +1,13 @@
-export interface ContentKey {
+export class ContentKey {
     id: string;
     category: number;
+
+    constructor(id: string, category: number) {
+        this.id = id;
+        this.category = category;
+    }
 }
+
 
 export interface Test {
     name: string;

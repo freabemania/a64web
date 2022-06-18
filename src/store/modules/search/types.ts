@@ -1,3 +1,5 @@
+import {ContentEntryContainer} from "@/models/ContentEntry";
+
 export interface Item {
     id? : string;
     name? : string;
@@ -12,6 +14,7 @@ export class DefaulItem {
 
 
 export interface SearchState {
-    searchResult : Array<Item>;
+    searchResult? : Array<Item>;
     selectedItem? : Item;
+    contentEntries? : ContentEntryContainer;
 }
