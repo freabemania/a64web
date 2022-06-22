@@ -19,7 +19,7 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
       </v-app-bar>
-      <v-main>
+      <v-main class="bg-grey-darken-4">
         <v-container fluid>
           <router-view></router-view>
         </v-container>

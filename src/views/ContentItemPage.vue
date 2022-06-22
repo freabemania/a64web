@@ -27,11 +27,20 @@
       <v-row>
         <v-col cols="4">
           <div class="text-uppercase text-shades-white text-h6">Files</div>
-          <v-list style="max-height: 300px" class="overflow-y-auto" :items="contentEntries" item-title="id" item-value="id"></v-list>
+          <v-list max-height="150px" class="overflow-y-auto" :items="contentEntries" item-title="id" item-value="id">
+          
+
+
+          </v-list>
         </v-col>
+      </v-row>
+    </v-card>
+
+    <v-card class="d-flex pa-3">
+      <v-row>
         <v-col cols="8">
-          <div class="text-uppercase text-shades-white text-h6">Image</div>
-          <v-img src="https://picsum.photos/200/300" max-width="200"/>
+          <div class="text-uppercase text-shades-white text-h6">Preview</div>
+          <v-img v-if="metadata.images.length > 0" :src="metadata.images[0].target" max-width="600"/>
         </v-col>
       </v-row>
     </v-card>
@@ -58,16 +67,21 @@
     },
     beforeMount() {
       const contentKey = toContentKey(this.id,this.category);
+      console.log(contentKey,store)
       store.dispatch('search/selectItem', contentKey)
       store.dispatch('search/fetchFiles',contentKey)
+      store.dispatch('search/fetchMetadataDetails',contentKey)
     },
     computed: {
-      ...mapGetters('search',['selectedItem','contentEntries']),
+      ...mapGetters('search',['selectedItem','contentEntries','metadata']),
       ...mapActions('search',['selectItem'])
     },
     methods: {
       back() {
         router.push('/search')
+      },
+      handle(e) {
+        console.log('ssss ' + e)
       }
     }
   }

@@ -5,13 +5,18 @@ import axios, {AxiosResponse} from "axios";
 import {ContentKey} from "@/models/ContentKey";
 import {ContentEntryContainer, Id} from "@/models/ContentEntry";
 import {SearchEntry} from "@/models/SearchEntry";
+import {Metadata} from "@/models/Metadata";
 
 const WEB_BASE = 'https://hackerswithstyle.se/leet'
 
 export const state: SearchState = {
     searchResult : undefined,
     selectedItem : undefined,
-    contentEntries : undefined
+    contentEntries : undefined,
+    metadata : {
+        name: '',
+        images : []
+    }
 }
 
 const getters : GetterTree<SearchState, RootState> = {
@@ -22,8 +27,10 @@ const getters : GetterTree<SearchState, RootState> = {
         return state.selectedItem!;
     },
     contentEntries(state) : Array<Id> {
-        state.contentEntries!.contentEntry.forEach(item => console.log(':::' +item.id));
-        return state.contentEntries!.contentEntry;
+        return state.contentEntries !== undefined && state.contentEntries!.contentEntry !== undefined ? state.contentEntries!.contentEntry : [];
+    },
+    metadata(state) {
+        return state.metadata;
     }
 }
 
@@ -36,7 +43,11 @@ const mutations : MutationTree<SearchState> = {
     },
     fetchFiles(state, contentEntries: ContentEntryContainer) : any {
         state.contentEntries = contentEntries;
-        state.contentEntries.contentEntry.forEach(item => console.log(item.id));
+        state.contentEntries.contentEntry.forEach(item => console.log('Data',item.id));
+    },
+    fetchMetadataDetails(state, metadata: Metadata) : any {
+        state.metadata = metadata;
+        state.metadata.images!.forEach(item => console.log(item.target))
     }
 }
 
@@ -54,12 +65,20 @@ const actions : ActionTree<SearchState, RootState> = {
         commit('selectItem',contentKey);
     },
     fetchFiles({commit}, contentKey : ContentKey) {
-            console.log(btoa(contentKey.id));
         axios({
             url : WEB_BASE + '/search/v2/contententries/' + btoa(contentKey.id) + '/' + contentKey.category
         }).then((response:AxiosResponse) => {
-            console.log(response.data)
             commit('fetchFiles',response.data)
+        },(error:any) => {
+            console.error(error);
+        })
+    },
+    fetchMetadataDetails({commit}, contentKey : ContentKey) {
+        axios({
+            url : WEB_BASE + '/search/v2/metadata/details/' + btoa(contentKey.id) + '/' + contentKey.category
+        }).then((response:AxiosResponse) => {
+            console.log('Response',response.data)
+            commit('fetchMetadataDetails',response.data)
         },(error:any) => {
             console.error(error);
         })

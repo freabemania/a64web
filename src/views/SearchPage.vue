@@ -1,12 +1,13 @@
 <template>
   <div class="d-flex align-center">
     <v-row>
-      <v-col cols="2">
+      <v-col cols="4">
         <v-text-field on
-            label="Outlined"
+            label="Searchcritera"
             v-model="searchCriteria"
             clearable
-            placeholder="Placeholder"
+            placeholder="What are you interested in?"
+                      onsubmit="search"
             @click:append="search"
             variant="outlined" append-icon="mdi-magnify" class="shrink"
         ></v-text-field>
