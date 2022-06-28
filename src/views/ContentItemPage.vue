@@ -27,13 +27,32 @@
       <v-row>
         <v-col cols="4">
           <div class="text-uppercase text-shades-white text-h6">Files</div>
-          <v-list max-height="150px">
+          <v-list max-height="150px" active-class="">
               <v-list-item
                   v-for="(item, i) in contentEntries"
                   :key="i"
-                  prepend-avatar="https://hackerswithstyle.se/assembly/app/tree-icon-floppy.png"
                   :title="item.id"
-              ></v-list-item>
+              >
+                <template v-slot:default="{ active }">
+                  <v-list-item-action>
+                    <v-icon
+                        v-if="!active"
+                        color="grey lighten-1"
+                    >
+                      mdi-star-outline
+                    </v-icon>
+
+                    <v-icon
+                        v-else
+                        color="yellow darken-3"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </v-list-item-action>
+
+                </template>
+
+              </v-list-item>
           </v-list>
         </v-col>
       </v-row>
@@ -106,6 +125,9 @@
       },
       handle(e) {
         console.log('ssss ' + e)
+      },
+      openContextMenu(item) {
+        console.log('i:' + item);
       }
     }
   }
