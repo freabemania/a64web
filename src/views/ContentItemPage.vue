@@ -27,10 +27,13 @@
       <v-row>
         <v-col cols="4">
           <div class="text-uppercase text-shades-white text-h6">Files</div>
-          <v-list max-height="150px" class="overflow-y-auto" :items="contentEntries" item-title="id" item-value="id">
-          
-
-
+          <v-list max-height="150px">
+              <v-list-item
+                  v-for="(item, i) in contentEntries"
+                  :key="i"
+                  prepend-avatar="https://hackerswithstyle.se/assembly/app/tree-icon-floppy.png"
+                  :title="item.id"
+              ></v-list-item>
           </v-list>
         </v-col>
       </v-row>
@@ -65,6 +68,27 @@
         required: true
       }
     },
+    data: () => ({
+      items: [
+        {
+          icon: 'mdi-inbox',
+          text: 'Inbox',
+        },
+        {
+          icon: 'mdi-star',
+          text: 'Star',
+        },
+        {
+          icon: 'mdi-send',
+          text: 'Send',
+        },
+        {
+          icon: 'mdi-email-open',
+          text: 'Drafts',
+        },
+      ],
+      model: 1,
+    }),
     beforeMount() {
       const contentKey = toContentKey(this.id,this.category);
       console.log(contentKey,store)

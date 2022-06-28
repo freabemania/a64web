@@ -24,6 +24,19 @@
           <router-view></router-view>
         </v-container>
       </v-main>
+      <v-dialog v-model="loading" persistent >
+        <v-card width="500" dark>
+          <v-card-text class=text-center>
+            <div>Processing...</div>
+            <v-progress-circular
+                :size="100"
+                :width="7"
+                color="purple"
+                indeterminate
+            ></v-progress-circular>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-app>
   <v-app v-if="!authenticated" theme="dark">
     <v-toolbar app>
@@ -60,6 +73,11 @@
       </v-card>
     </div>
   </v-app>
+  <v-app>
+    <div>
+
+    </div>
+  </v-app>
 </template>
 
 <style lang="less">
@@ -90,7 +108,8 @@ import router from "@/router";
       //
     }),
     computed: {
-      ...mapGetters('security',['authenticated','loginError'])
+      ...mapGetters('security',['authenticated','loginError']),
+      ...mapGetters('search',['loading']),
     },
     methods: {
       login() {

@@ -10,9 +10,13 @@ import {Metadata} from "@/models/Metadata";
 const WEB_BASE = 'https://hackerswithstyle.se/leet'
 
 export const state: SearchState = {
+    loading : false,
     searchResult : undefined,
     selectedItem : undefined,
-    contentEntries : undefined,
+    contentEntries : {
+        isContentByItself : false,
+        contentEntry: []
+    },
     metadata : {
         name: '',
         images : []
@@ -31,7 +35,10 @@ const getters : GetterTree<SearchState, RootState> = {
     },
     metadata(state) {
         return state.metadata;
-    }
+    },
+    loading(state) {
+        return state.loading;
+    },
 }
 
 const mutations : MutationTree<SearchState> = {
@@ -48,17 +55,23 @@ const mutations : MutationTree<SearchState> = {
     fetchMetadataDetails(state, metadata: Metadata) : any {
         state.metadata = metadata;
         state.metadata.images!.forEach(item => console.log(item.target))
+    },
+    loading(state, loading : boolean) : any {
+        state.loading = loading;
     }
 }
 
 const actions : ActionTree<SearchState, RootState> = {
     executeSearch({commit},searchCriteria) : any {
+        commit('loading',true);
         axios({
             url : WEB_BASE + '/search/v2?or=Y&name=' + searchCriteria
         }).then((response:AxiosResponse) => {
+            commit('loading',false);
             commit('searchOk',response.data);
         },(error:any) => {
             console.error(error);
+            commit('loading',false);
         })
     },
     selectItem({commit}, contentKey : ContentKey) {
@@ -83,6 +96,9 @@ const actions : ActionTree<SearchState, RootState> = {
             console.error(error);
         })
 
+    },
+    loading({commit}) {
+        commit('loading');
     }
 }
 

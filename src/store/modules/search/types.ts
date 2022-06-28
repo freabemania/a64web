@@ -15,6 +15,7 @@ export class DefaulItem {
 
 
 export interface SearchState {
+    loading : boolean,
     searchResult? : Array<Item>;
     selectedItem? : Item;
     contentEntries? : ContentEntryContainer;
