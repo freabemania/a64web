@@ -44,27 +44,19 @@
 <style>
 </style>
 
-<script>
-import {mapGetters,mapActions} from 'vuex'
-import store from '@/store'
-import router from '@/router'
+<script setup>
+  import {ref,computed} from "vue"
+  import { useStore } from 'vuex'
+  import router from '@/router'
 
-  export default {
-    data() {
-      return {
-        searchCriteria: null
-      }
-    }, methods: {
-      search() {
-        store.dispatch('search/executeSearch',this.searchCriteria)
-      }, rowClick(item) {
-        router.push('/contentItem/' + item.category + '/' + item.id)
-      }
-    },
-    computed: {
-      ...mapGetters('search',['items']),
-      ...mapActions('search',['executeSearch'])
-    }
+  const searchCriteria = ref()
+  const store = useStore()
+  const items = computed(() => store.getters["search/items"])
+
+  function search() {
+    store.dispatch('search/executeSearch',searchCriteria.value)
   }
-
+  function rowClick(item) {
+    router.push('/contentItem/' + item.category + '/' + item.id)
+  }
 </script>

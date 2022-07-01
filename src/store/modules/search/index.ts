@@ -50,7 +50,6 @@ const mutations : MutationTree<SearchState> = {
     },
     fetchFiles(state, contentEntries: ContentEntryContainer) : any {
         state.contentEntries = contentEntries;
-        state.contentEntries.contentEntry.forEach(item => console.log('Data',item.id));
     },
     fetchMetadataDetails(state, metadata: Metadata) : any {
         state.metadata = metadata;

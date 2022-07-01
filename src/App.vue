@@ -42,13 +42,6 @@
     <v-app-bar app>
       <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
     </v-app-bar>
-    <!--
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">Assembly64</v-toolbar-title>
-      <v-btn flat href="http://download" target="_blank" icon="mdi-download-circle">
-      </v-btn>
-    </v-toolbar>
-    -->
     <v-main class="bg-grey-darken-4">
       <v-container class="align-center">
         <v-card
@@ -87,50 +80,44 @@
 .sidify-main {
   background-color: aquamarine;
 }
-
 </style>
 
-<script>
-import { mapGetters} from 'vuex'
-import store from '@/store'
-import router from "@/router";
+<script setup>
+import router from '@/router'
+import {onMounted, ref, computed} from 'vue'
+import {useStore} from "vuex";
 
-  export default {
-    name: 'App',
-    beforeMount() {
-      this.showLoginButton = false
-    },
-    mounted() {
-      router.push("/landingpage")
-    },
-    data: () => ({
-      username : '',
-      password : '',
-      drawer: null,
-      showLoginButton : false
-      //
-    }),
-    computed: {
-      ...mapGetters('security',['authenticated','loginError']),
-      ...mapGetters('search',['loading']),
-    },
-    methods: {
-      login() {
-        let credentials = {
-          username : this.username,
-          password : this.password
-        }
-        store.dispatch('security/withPassword',credentials)
-      },
-      toggleLoginButton() {
-        this.showLoginButton = this.username.length > 0 && this.password.length > 0
-      },
-      toSearch() {
-        router.push("/search")
-      },
-      toStart() {
-        router.push("/")
-      }
+  const showLoginButton = ref(false)
+  const username = ref('')
+  const password = ref('')
+  const drawer = ref()
+
+  const store = useStore()
+  const authenticated = computed(() => store.getters["security/authenticated"])
+  const loginError = computed(() => store.getters["security/loginError"])
+  const loading = computed(() => store.getters["search/loading"])
+
+  onMounted(() => {
+    router.push("/landingpage")
+  })
+
+  function login() {
+    let credentials = {
+      username : username.value,
+      password : password.value
     }
+    store.dispatch('security/withPassword',credentials)
+  }
+
+  function toggleLoginButton() {
+    showLoginButton.value = username.value.length > 0 && password.value.length > 0
+  }
+
+  function toSearch() {
+    router.push("/search")
+  }
+
+  function toStart() {
+    router.push("/")
   }
 </script>
