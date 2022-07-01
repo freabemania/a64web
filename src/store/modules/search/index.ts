@@ -90,12 +90,10 @@ const actions : ActionTree<SearchState, RootState> = {
         axios({
             url : WEB_BASE + '/search/v2/metadata/details/' + btoa(contentKey.id) + '/' + contentKey.category
         }).then((response:AxiosResponse) => {
-            console.log('Response',response.data)
             commit('fetchMetadataDetails',response.data)
         },(error:any) => {
             console.error(error);
         })
-
     },
     loading({commit}) {
         commit('loading');

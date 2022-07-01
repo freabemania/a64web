@@ -39,44 +39,47 @@
       </v-dialog>
   </v-app>
   <v-app v-if="!authenticated" theme="dark">
+    <v-app-bar app>
+      <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
+    </v-app-bar>
+    <!--
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">Assembly64</v-toolbar-title>
       <v-btn flat href="http://download" target="_blank" icon="mdi-download-circle">
       </v-btn>
     </v-toolbar>
-    <div class="d-flex align-center flex-column">
-      <v-card
-          width="400"
-          title="Assembly64 Login" class="align-center"
-      >
-        <v-label v-if="loginError" class="text-red-accent-1">Invalid credentials</v-label>
-        <v-spacer v-if="loginError" ></v-spacer>
-        <v-text-field
-            v-model="username"
-            @keyup="toggleLoginButton"
-            label="Username"
-            variant="outlined"
-            clearable
-            clear-icon="mdi-cancel"
-        ></v-text-field>
-        <v-text-field @keyup="toggleLoginButton"
-            v-model="password"
-            label="Password"
-            variant="outlined"
-            clearable
-            clear-icon="mdi-cancel"
-        ></v-text-field>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" @click="login" v-if="showLoginButton" class="red--text">
-          Login
-        </v-btn>
-      </v-card>
-    </div>
-  </v-app>
-  <v-app>
-    <div>
+    -->
+    <v-main class="bg-grey-darken-4">
+      <v-container class="align-center">
+        <v-card
+            width="400"
+            title="Assembly64 Login" class="align-center"
+        >
+          <v-label v-if="loginError" class="text-red-accent-1">Invalid credentials</v-label>
+          <v-spacer v-if="loginError" ></v-spacer>
+          <v-text-field
+              v-model="username"
+              @keyup="toggleLoginButton"
+              label="Username"
+              variant="outlined"
+              clearable
+              clear-icon="mdi-cancel"
+          ></v-text-field>
+          <v-text-field @keyup="toggleLoginButton"
+                        v-model="password"
+                        label="Password"
+                        variant="outlined"
+                        clearable
+                        clear-icon="mdi-cancel"
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="login" v-if="showLoginButton" class="red--text">
+            Login
+          </v-btn>
+        </v-card>
 
-    </div>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 

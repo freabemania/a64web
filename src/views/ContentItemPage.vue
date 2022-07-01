@@ -9,7 +9,7 @@
     <v-card class="d-flex pa-3">
       <v-row>
         <v-col cols="4">
-          <div class="text-uppercase text-shades-white text-h6">Name</div>
+          <div class="text-uppercase text-shades-white text-h6">Namse</div>
           <div class="text-grey">{{selectedItem.name}}</div>
         </v-col>
         <v-col cols="4">
@@ -31,20 +31,20 @@
               <v-list-item
                   v-for="(item, i) in contentEntries"
                   :key="i"
-                  :title="item.id"
               >
                 <template v-slot:default="{ active }">
+                  <v-list-item-title>{{item.id}}</v-list-item-title>
                   <v-list-item-action>
                     <v-icon
                         v-if="!active"
-                        color="grey lighten-1"
+                        color="red"
                     >
                       mdi-star-outline
                     </v-icon>
 
                     <v-icon
                         v-else
-                        color="yellow darken-3"
+                        color="yellow"
                     >
                       mdi-star
                     </v-icon>
@@ -70,66 +70,31 @@
   </v-container>
 </template>
 
-<script>
-  import router from '@/router'
-  import {mapGetters,mapActions} from 'vuex'
-  import store from '@/store'
+<script setup>
+  import { computed, onBeforeMount } from "vue"
   import {toContentKey} from '@/helpers/ContentHelper.ts'
+  import { useStore } from 'vuex'
 
-  export default {
-    props: {
-      id : {
-        type: String,
-        required: true
-      },
-      category : {
-        type: Number,
-        required: true
-      }
+  const store = useStore()
+  const selectedItem = computed(() => store.getters["search/selectedItem"])
+  const contentEntries = computed(() => store.getters["search/contentEntries"])
+  const metadata = computed(() => store.getters["search/metadata"])
+
+  const props = defineProps({
+    id : {
+      type: String,
+      required: true
     },
-    data: () => ({
-      items: [
-        {
-          icon: 'mdi-inbox',
-          text: 'Inbox',
-        },
-        {
-          icon: 'mdi-star',
-          text: 'Star',
-        },
-        {
-          icon: 'mdi-send',
-          text: 'Send',
-        },
-        {
-          icon: 'mdi-email-open',
-          text: 'Drafts',
-        },
-      ],
-      model: 1,
-    }),
-    beforeMount() {
-      const contentKey = toContentKey(this.id,this.category);
-      console.log(contentKey,store)
-      store.dispatch('search/selectItem', contentKey)
-      store.dispatch('search/fetchFiles',contentKey)
-      store.dispatch('search/fetchMetadataDetails',contentKey)
-    },
-    computed: {
-      ...mapGetters('search',['selectedItem','contentEntries','metadata']),
-      ...mapActions('search',['selectItem'])
-    },
-    methods: {
-      back() {
-        router.push('/search')
-      },
-      handle(e) {
-        console.log('ssss ' + e)
-      },
-      openContextMenu(item) {
-        console.log('i:' + item);
-      }
+    category : {
+      type: Number,
+      required: true
     }
-  }
+  })
 
+  onBeforeMount(() => {
+    const contentKey = toContentKey(props.id,props.category)
+    store.dispatch('search/selectItem', contentKey)
+    store.dispatch('search/fetchFiles',contentKey)
+    store.dispatch('search/fetchMetadataDetails',contentKey)
+  })
 </script>
