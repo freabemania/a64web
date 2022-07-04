@@ -2,7 +2,7 @@
   <v-container >
     <v-row align="start" no-gutters>
       <v-col cols="12">
-        <v-btn @click="back()" target="_blank" icon="mdi-arrow-left"/>
+        <v-btn @click="backToSearch()" target="_blank" icon="mdi-arrow-left"/>
       </v-col>
     </v-row>
 
@@ -72,14 +72,14 @@
 
 <script setup>
   import { computed, onBeforeMount } from "vue"
-  import {toContentKey} from '@/helpers/ContentHelper.ts'
+  import { toContentKey } from '@/helpers/ContentHelper.ts'
   import { useStore } from 'vuex'
+  import router from '@/router'
 
   const store = useStore()
   const selectedItem = computed(() => store.getters["search/selectedItem"])
   const contentEntries = computed(() => store.getters["search/contentEntries"])
   const metadata = computed(() => store.getters["search/metadata"])
-
   const props = defineProps({
     id : {
       type: String,
@@ -90,6 +90,10 @@
       required: true
     }
   })
+
+  function backToSearch() {
+    router.push("/search")
+  }
 
   onBeforeMount(() => {
     const contentKey = toContentKey(props.id,props.category)

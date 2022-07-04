@@ -1,11 +1,11 @@
 <template>
-  <v-app v-if="authenticated" theme="dark">
+  <v-app v-if="userInfo.authenticated" theme="dark">
       <v-navigation-drawer v-model="drawer" app>
         <v-list class="bg-grey-darken-4">
           <v-list-item
-              prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-              title="Sandra Adams"
-              subtitle="sandra_a88@gmailcom"
+              :prepend-avatar="avatarUrl"
+              :title="userInfo.name"
+              :subtitle="userInfo.email"
               class="bg-grey-darken-4"
           ></v-list-item>
         </v-list>
@@ -96,6 +96,8 @@ import {useStore} from "vuex";
   const authenticated = computed(() => store.getters["security/authenticated"])
   const loginError = computed(() => store.getters["security/loginError"])
   const loading = computed(() => store.getters["search/loading"])
+  const userInfo = computed(() => store.getters["security/userInfo"])
+  const avatarUrl = computed(() => store.getters["security/avatarUrl"])
 
   onMounted(() => {
     router.push("/landingpage")
