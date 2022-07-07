@@ -1,5 +1,5 @@
 import {ActionTree, GetterTree, Module, MutationTree} from "vuex";
-import {SearchState, Item, DefaulItem} from "@/store/modules/search/types";
+import {SearchState, Item} from "@/store/modules/search/types";
 import {RootState} from "@/store/types";
 import axios, {AxiosResponse} from "axios";
 import {ContentKey} from "@/models/ContentKey";

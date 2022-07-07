@@ -35,58 +35,15 @@ const getters : GetterTree<UserState, RootState> = {
     }
 }
 
-const actions : ActionTree<UserState, RootState> = {
-    withPassword({commit}): any {
-        console.log('12333')
-        axios({
-            url: WEB_BASE + '/user/login/lite2/freabe@gmail.com/fredde2002',
-        }).then((response: AxiosResponse)=> {
-            commit('loginOk',response.data);
-            axios({
-                url: WEB_BASE + '/user/avatar/189', //your url
-                headers: {
-                    'token': response.data.token,
-                },
-                method: 'GET',
-                responseType: 'blob', // important
-            }).then((response) => {
-                commit('setAvatar', window.URL.createObjectURL(new Blob([response.data])))
-            })
-        },(error : any) => {
-            commit('loginError');
-        })
-    }, getAvatar({commit,state}) : any {
-        console.log('get avatar')
-        axios({
-            url: WEB_BASE + '/user/avatar/189' + state.user.id, //your url
-            headers: {
-              email: state.user.email,
-              token: state.user.token
-            },
-            method: 'GET',
-            responseType: 'blob', // important
-        }).then((response) => {
-            commit('setAvatar', window.URL.createObjectURL(new Blob([response.data])))
-
-            //const link = document.createElement('a');
-            //link.href = url;
-            //link.setAttribute('download', 'file.pdf'); //or any other extension
-            //document.body.appendChild(link);
-            //link.click();
-        });
-    }
-}
-
 const mutations : MutationTree<UserState> = {
     loginOk(state,payload) : any {
+        state.user.id = payload.id;
         state.user.email = payload.email;
         state.user.name = payload.name;
         state.user.country = payload.country;
         state.user.token = payload.token;
         state.user.loginError = false;
         state.user.authenticated = true;
-        console.log('uname:' + state.user.token)
-
     },
     loginError(state) {
         state.user.authenticated = false;
@@ -94,9 +51,33 @@ const mutations : MutationTree<UserState> = {
     },
     setAvatar(state,avatarUrl) {
         state.avatarUrl = avatarUrl
-        console.log('url',state)
     }
 }
+
+const actions : ActionTree<UserState, RootState> = {
+    async withPassword({commit},credentials) {
+        await axios({
+            url: WEB_BASE + '/user/login/lite2/freabe@gmail.com/fredde2002',
+        }).then((response: AxiosResponse)=> {
+            commit('loginOk',response.data);
+        },(error : any) => {
+            commit('loginError');
+        })
+    }, async getAvatar({commit,state}) {
+        console.log('gest avatar' + state.user.token)
+        await axios({
+            url: WEB_BASE + '/user/avatar/' + state.user.id,
+            headers: {
+                'token': state.user.token
+            },
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            commit('setAvatar', window.URL.createObjectURL(new Blob([response.data])))
+        })
+    }
+}
+
 
 export const security: Module<UserState, RootState> = {
     namespaced,

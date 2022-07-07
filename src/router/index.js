@@ -1,6 +1,7 @@
 import {createRouter,createWebHistory } from 'vue-router'
 import HelloWorld from "@/views/HelloWorld";
-import LandingPage from "@/views/LandingPage"
+import LandingPage from '@/views/LandingPage'
+import SidifyMain from '@/views/SidifyMain'
 import MainPage from '@/views/SearchPage'
 import ContentItemPage from '@/views/ContentItemPage'
 
@@ -16,7 +17,8 @@ const routes = [
             id : route.params.id
         })
     },
-    { path: '/search', component: MainPage}
+    { path: '/search', component: MainPage},
+    { path: '/sidify', component: SidifyMain}
 ]
 
 const router = createRouter({

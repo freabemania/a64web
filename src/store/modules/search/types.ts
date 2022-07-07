@@ -9,11 +9,6 @@ export interface Item {
     year?: number;
 }
 
-export class DefaulItem {
-
-}
-
-
 export interface SearchState {
     loading : boolean,
     searchResult? : Array<Item>;

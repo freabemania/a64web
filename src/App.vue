@@ -10,9 +10,9 @@
           ></v-list-item>
         </v-list>
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" @click="toSearch" title="Search" value="search"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" @click="toStart" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+          <v-list-item prepend-icon="mdi-magnify-plus" @click="route('search')" title="Search" value="search"></v-list-item>
+          <v-list-item prepend-icon="mdi-music-clef-treble" @click="route('sidify')" title="Sidify" value="starred"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-multiple" @click="route('')" title="Shared with me" value="shared"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-app-bar app>
@@ -38,7 +38,7 @@
         </v-card>
       </v-dialog>
   </v-app>
-  <v-app v-if="!authenticated" theme="dark">
+  <v-app v-else theme="dark">
     <v-app-bar app>
       <v-toolbar-title>ASSEMBLY64</v-toolbar-title>
     </v-app-bar>
@@ -70,7 +70,6 @@
             Login
           </v-btn>
         </v-card>
-
       </v-container>
     </v-main>
   </v-app>
@@ -93,7 +92,6 @@ import {useStore} from "vuex";
   const drawer = ref()
 
   const store = useStore()
-  const authenticated = computed(() => store.getters["security/authenticated"])
   const loginError = computed(() => store.getters["security/loginError"])
   const loading = computed(() => store.getters["search/loading"])
   const userInfo = computed(() => store.getters["security/userInfo"])
@@ -103,23 +101,21 @@ import {useStore} from "vuex";
     router.push("/landingpage")
   })
 
-  function login() {
+  async function login() {
     let credentials = {
       username : username.value,
       password : password.value
     }
-    store.dispatch('security/withPassword',credentials)
+    await store.dispatch('security/withPassword',credentials)
+    await store.dispatch('security/getAvatar')
   }
 
   function toggleLoginButton() {
     showLoginButton.value = username.value.length > 0 && password.value.length > 0
   }
 
-  function toSearch() {
-    router.push("/search")
+  function route(route) {
+    router.push("/" + route)
   }
 
-  function toStart() {
-    router.push("/")
-  }
 </script>
