@@ -72,7 +72,25 @@
         </v-card>
       </v-container>
     </v-main>
+
+    <!--
+    <SandboxPage>
+      <template v-slot:header>
+        Header 1
+      </template>
+      <template v-slot:main>
+        Main 1
+      </template>
+      <template v-slot:footer>
+        Footer 1
+      </template>
+      <template v-slot:extra="slotProps">
+        Platform: {{slotProps.platform}}
+      </template>
+    </SandboxPage>
+    -->
   </v-app>
+
 </template>
 
 <style lang="less">
@@ -83,6 +101,7 @@
 
 <script setup>
 import router from '@/router'
+import SandboxPage from '@/views/SandboxPage'
 import {onMounted, ref, computed} from 'vue'
 import {useStore} from "vuex";
 

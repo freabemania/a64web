@@ -37,6 +37,7 @@ const getters : GetterTree<UserState, RootState> = {
 
 const mutations : MutationTree<UserState> = {
     loginOk(state,payload) : any {
+        console.log('Token',payload.token)
         state.user.id = payload.id;
         state.user.email = payload.email;
         state.user.name = payload.name;

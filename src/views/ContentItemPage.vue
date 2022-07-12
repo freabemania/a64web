@@ -41,7 +41,6 @@
                     >
                       mdi-star-outline
                     </v-icon>
-
                     <v-icon
                         v-else
                         color="yellow"
@@ -49,9 +48,7 @@
                       mdi-star
                     </v-icon>
                   </v-list-item-action>
-
                 </template>
-
               </v-list-item>
           </v-list>
         </v-col>
