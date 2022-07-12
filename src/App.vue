@@ -27,25 +27,24 @@
     <v-bottom-navigation v-model="value">
 
       <v-btn value="favorites">
-        <v-icon>mdi-arrow-right-drop-circle</v-icon>
-      </v-btn>
-      
-      <v-btn value="favorites">
-        <v-icon>mdi-arrow-right-drop-circle</v-icon>
-      </v-btn>
-
-
-      <v-btn value="favorites">
-        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+        <v-icon>mdi-skip-backward</v-icon>
       </v-btn>
 
       <v-btn value="favorites">
-        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+        <v-icon>mdi-step-backward</v-icon>
+      </v-btn>
+
+      <v-btn value="favorites">
+        <v-icon>mdi-play</v-icon>
+      </v-btn>
+
+      <v-btn value="favorites">
+        <v-icon>mdi-step-forward</v-icon>
       </v-btn>
 
 
       <v-btn value="favorites">
-        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+        <v-icon>mdi-skip-forward</v-icon>
       </v-btn>
 
 
