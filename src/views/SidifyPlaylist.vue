@@ -1,5 +1,4 @@
 <template>
-
   <v-container>
     <v-row>
       <v-col cols="12">
@@ -9,7 +8,7 @@
     <v-row>
       <v-col cols="3">
         <v-row>
-          <v-list width="550px" lines="two">
+          <v-list height="400px" width="550px" lines="two">
             <v-list-item v-for="(item,i) in tracks" :key="i" @click="play(item)">
               <v-list-item-header>
                 <v-list-item-title>{{item.name}}</v-list-item-title>

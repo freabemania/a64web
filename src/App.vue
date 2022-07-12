@@ -24,6 +24,33 @@
           <router-view></router-view>
         </v-container>
       </v-main>
+    <v-bottom-navigation v-model="value">
+
+      <v-btn value="favorites">
+        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+      </v-btn>
+      
+      <v-btn value="favorites">
+        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+      </v-btn>
+
+
+      <v-btn value="favorites">
+        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+      </v-btn>
+
+      <v-btn value="favorites">
+        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+      </v-btn>
+
+
+      <v-btn value="favorites">
+        <v-icon>mdi-arrow-right-drop-circle</v-icon>
+      </v-btn>
+
+
+    </v-bottom-navigation>
+
       <v-dialog v-model="loading" persistent >
         <v-card width="500" dark>
           <v-card-text class=text-center>
