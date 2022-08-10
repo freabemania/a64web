@@ -24,8 +24,13 @@
           <router-view></router-view>
         </v-container>
       </v-main>
-    <v-bottom-navigation v-model="value">
-
+    <v-bottom-navigation height="100" v-model="value" v-if="sidifyActive">
+      <v-progress-linear
+          :model-value="progess"
+          color="light-blue"
+          height="10"
+          striped
+      ></v-progress-linear>
       <v-btn value="favorites">
         <v-icon>mdi-skip-backward</v-icon>
       </v-btn>
@@ -135,12 +140,14 @@ import {useStore} from "vuex";
   const username = ref('')
   const password = ref('')
   const drawer = ref()
+  const progess = ref(20)
 
   const store = useStore()
   const loginError = computed(() => store.getters["security/loginError"])
   const loading = computed(() => store.getters["search/loading"])
   const userInfo = computed(() => store.getters["security/userInfo"])
   const avatarUrl = computed(() => store.getters["security/avatarUrl"])
+  const sidifyActive = computed(() => store.getters["sidify/sidifyActive"])
 
   onMounted(() => {
     router.push("/landingpage")

@@ -1,6 +1,7 @@
 export interface PlaylistState {
     collections?: Array<Playlist>
     tracks: Array<Track>
+    sidifyActive: Boolean
 }
 
 export interface Playlist {

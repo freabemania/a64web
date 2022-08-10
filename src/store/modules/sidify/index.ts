@@ -6,7 +6,8 @@ import {getHost} from "@/helpers/ContentHelper";
 
 export const state : PlaylistState = {
     collections : [],
-    tracks : []
+    tracks : [],
+    sidifyActive : false
 }
 
 const namespaced: boolean = true;
@@ -17,6 +18,9 @@ const getters : GetterTree<PlaylistState, RootState> = {
     },
     getTracks(state) : Array<Track> {
         return state.tracks!
+    },
+    sidifyActive(state): Boolean {
+        return state.sidifyActive
     }
 }
 
@@ -26,6 +30,9 @@ const mutations : MutationTree<PlaylistState> = {
     },
     storeTracksForPlaylist(state,payload) {
         state.tracks = payload
+    },
+    sidifyActive(state, status) {
+        state.sidifyActive = status
     }
 }
 
@@ -57,6 +64,9 @@ const actions : ActionTree<PlaylistState, RootState> = {
     },
     async clearCurrentTracks({commit,state}) {
         state.tracks = []
+    },
+    sidifyActive({commit},status) {
+        commit('sidifyActive', status)
     }
 }
 

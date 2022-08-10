@@ -41,6 +41,7 @@
 
   function play(item) {
     console.log('play ' + item.id)
+    store.dispatch('sidify/sidifyActive',true)
   }
 
   onBeforeMount(() => {
