@@ -7,7 +7,7 @@
 
 
 <script>
-
+/*
   import jsxcompressor from '../../public/jsSID/js/jsxcompressor.js'
   import stream from '../../public/jsSID/js/stream.js'
   import jssidcore from '../../public/jsSID/js/jssid.core.js'
@@ -17,6 +17,8 @@
   import jssidmos6510 from '../../public/jsSID/js/jssid.mos6510.js'
   import jssidsidplayer from '../../public/jsSID/js/jssid.sidplayer.js'
 
+
+ */
   export default {
     data() {
       return {
